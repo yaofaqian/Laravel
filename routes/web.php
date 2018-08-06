@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('php', function () {
+    return 'php是世界上最好的语言';
+});
+Route::get('/user/{id}', 'UserController@user');
