@@ -15,6 +15,10 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
+    protected $frontendNamespace = 'App\Http\Controllers\Frontend';//前端
+    protected $backendNamespace = 'App\Http\Controllers\Backend';//管理后台
+    protected $apiNamespace = 'App\Http\Controllers\Api';//API
+
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -35,11 +39,17 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
-
-        //
+        //$this->mapApiRoutes();
+        if(isset($_SERVER['HTTP_HOST'])){
+            $sld_prefix = explode('.',$_SERVER['HTTP_HOST'])[0];
+            if($sld_prefix == 'admin'){
+                $this->mapBackendRoutes();
+            }elseif($sld_prefix == 'homestead'){
+                $this->mapFrontendRoutes();
+            }elseif($sld_prefix == 'api'){
+                $this->mapApiRoutes();
+            }
+        }
     }
 
     /**
@@ -52,9 +62,10 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
+
 
     /**
      * Define the "api" routes for the application.
@@ -66,8 +77,27 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->apiNamespace)
+            ->group(base_path('routes/api.php'));
+    }
+    /**
+     * 管理后台
+     */
+    protected function mapBackendRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->backendNamespace)
+            ->group(base_path('routes/backend.php'));
+    }
+
+    /**
+     * PC端
+     */
+    protected function mapFrontendRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->frontendNamespace)
+            ->group(base_path('routes/frontend.php'));
     }
 }

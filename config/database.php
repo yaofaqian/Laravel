@@ -63,6 +63,17 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix'    => '',
         ],
+        'usercenterdb' => [
+            'host' => '192.168.221.141',
+            'sticky'    => true,
+            'driver'    => 'mysql',
+            'database'  => 'usercenterdb',
+            'username'  => 'webdbuser',
+            'password'  => 'ZGfyb@123',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix'    => '',
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
