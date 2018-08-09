@@ -18,3 +18,6 @@ Route::get('php', function () {
     return 'php是世界上最好的语言';
 });
 Route::get('/user/{id}', 'UserController@user');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

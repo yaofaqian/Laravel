@@ -11,4 +11,8 @@
 |
 */
 
-Route::get('/', 'BackendController@index');
+Route::get('/', 'BackendController@index')->middleware('auth');
+Route::get('/login', 'LoginController@index');
+Route::post('/login', 'LoginController@login')->name('login');
+Route::get('/logout', 'LoginController@logout')->name('logout');
+//Auth::routes();
